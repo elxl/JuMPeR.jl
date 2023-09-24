@@ -136,7 +136,7 @@ show( io::IO, u::Uncertain) = print(io, getName(u))
 
 #############################################################################
 # Uncertain Affine Expression class
-typealias UAffExpr GenericAffExpr{Float64,Uncertain}
+const UAffExpr = GenericAffExpr{Float64,Uncertain}
 
 UAffExpr() = UAffExpr(Uncertain[],Float64[],0.)
 UAffExpr(c::Real) = UAffExpr(Uncertain[],Float64[],float(c))
@@ -154,7 +154,7 @@ show( io::IO, a::UAffExpr) = print(io, affToStr(a))
 # Todo: better name. In my other robust modelling tools I called it
 # something like this, but the catch then was that there we only two types of
 # affexpr - the one with UAffExpr coefficients = Full, and the UAffExpr itself
-typealias FullAffExpr GenericAffExpr{UAffExpr,Variable}
+const FullAffExpr = GenericAffExpr{UAffExpr,Variable}
 
 FullAffExpr() = FullAffExpr(Variable[], UAffExpr[], UAffExpr())
 function push!(faff::FullAffExpr, new_coeff::Real, new_var::Variable)
@@ -164,7 +164,7 @@ end
 
 #############################################################################
 # UncSetConstraint      Just uncertainties
-typealias UncSetConstraint GenericRangeConstraint{UAffExpr}
+const UncSetConstraint = GenericRangeConstraint{UAffExpr}
 # For 0.2
 UncSetConstraint(uaff::UAffExpr,x::Float64,y::Int) = UncSetConstraint(uaff,x,float(y))
 UncSetConstraint(uaff::UAffExpr,x::Int,y::Float64) = UncSetConstraint(uaff,float(x),x)
@@ -172,7 +172,7 @@ UncSetConstraint(uaff::UAffExpr,x::Int,y::Int) = UncSetConstraint(uaff,float(x),
 addConstraint(m::Model, c::UncSetConstraint) = push!(getRobust(m).uncertaintyset, c)
 
 # UncConstraint         Mix of variables and uncertains
-typealias UncConstraint GenericRangeConstraint{FullAffExpr}
+const UncConstraint = GenericRangeConstraint{FullAffExpr}
 # For 0.2
 UncConstraint(faff::FullAffExpr,x::Float64,y::Int) = UncConstraint(faff,x,float(y))
 UncConstraint(faff::FullAffExpr,x::Int,y::Float64) = UncConstraint(faff,float(x),x)
