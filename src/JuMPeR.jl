@@ -109,7 +109,7 @@ end
 #############################################################################
 # Uncertain
 # Similar to JuMP.Variable, has an reference back to the model and an id num
-type Uncertain
+struct Uncertain
     m::Model
     unc::Int
 end
