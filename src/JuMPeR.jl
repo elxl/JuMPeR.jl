@@ -11,7 +11,7 @@ import JuMP.sense, JuMP.rhs
 import JuMP.IndexedVector, JuMP.addelt!, JuMP.isexpr
 import JuMP.string_intclamp
 import JuMP.JuMPDict
-importall JuMP
+using JuMP
 
 import Base.dot, Base.sum, Base.push!
 
