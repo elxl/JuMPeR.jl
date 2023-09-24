@@ -1,0 +1,20 @@
+language: cpp
+compiler:
+    - gcc
+notifications:
+    email: false
+env:
+    - PKGADD="GLPKMathProgInterface" JULIAVERSION="julianightlies" 
+before_install:
+    - sudo add-apt-repository ppa:staticfloat/julia-deps -y
+    - sudo add-apt-repository ppa:staticfloat/${JULIAVERSION} -y
+    - sudo apt-get update -qq -y
+    - sudo apt-get install julia -y
+    - sudo apt-get install libgmp-dev -y
+    - git config --global user.name "Travis User"
+    - git config --global user.email "travis@example.net"
+script:
+    - julia -e 'Pkg.init(); Pkg.add("JuMP"); Pkg.checkout("JuMP")'
+    - julia -e 'run(`ln -s $(pwd()) $(Pkg.dir("JuMPeR"))`)'
+    - julia -e 'for p in split(ENV["PKGADD"],";") Pkg.add(p) end'
+    - julia ./test/runtests.jl
