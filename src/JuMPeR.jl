@@ -47,7 +47,7 @@ export
 
 #############################################################################
 # RobustData contains all extensions to the base JuMP model type
-type RobustData
+struct RobustData
     # Variable-Uncertain mixed constraints
     uncertainconstr
     # Oracles associated with each uncertainconstr
